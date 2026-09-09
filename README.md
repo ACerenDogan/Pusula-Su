@@ -1,8 +1,8 @@
 # PusulaSu
 
-PusulaSu, su abonelerinin sayaç okumalarını kaydedebildiği, tüketimlerini takip edebildiği ve güncel tarifeye göre tahmini su bedelini görüntüleyebildiği web tabanlı bir takip uygulamasıdır.
+PusulaSu, su abonelerinin sayaç okumalarını kaydedebildiği tüketimlerini takip edebildiği ve güncel tarifeye göre tahmini su bedelini görüntüleyebildiği web tabanlı bir takip uygulamasıdır.
 
-Bu projeyi, su tüketim sürecini hem kullanıcı hem de yönetici açısından daha anlaşılır ve düzenli hâle getirmek amacıyla geliştirdim.
+Bu projeyi su tüketim sürecini hem kullanıcı hem de yönetici açısından daha anlaşılır ve düzenli hâle getirmek amacıyla geliştirdim.
 
 ## Özellikler
 
@@ -74,7 +74,7 @@ PusulaSu/
 ### Projeyi çalıştırma
 
 ```bash
-git clone https://github.com/ACerenDogan/PusulaSuSON.git
+git clone https://github.com/ACerenDogan/Pusula-Su.git
 cd PusulaSuSON/PusulaSu
 dotnet restore
 dotnet run
