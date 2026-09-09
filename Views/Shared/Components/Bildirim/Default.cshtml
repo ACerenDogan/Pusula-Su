@@ -1,0 +1,141 @@
+@model PusulaSu.Models.BildirimMenuViewModel
+
+<div class="dropdown pusulasu-notification-dropdown">
+
+    <!-- Bildirim menüsünü açan buton -->
+    <button id="bildirimButonu"
+            class="pusulasu-notification-button"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-label="Bildirimleri aç"
+            title="Bildirimler">
+
+        <svg class="notification-bell-icon"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             aria-hidden="true">
+
+            <path d="M18 8a6 6 0 0 0-12 0
+                     c0 7-3 7-3 9h18
+                     c0-2-3-2-3-9" />
+
+            <path d="M10 21h4" />
+        </svg>
+
+        @if (Model.OkunmamisSayisi > 0)
+        {
+            <span id="bildirimSayisi"
+                  class="pusulasu-notification-badge">
+                @Model.OkunmamisSayisi
+            </span>
+        }
+    </button>
+
+    <!-- Açılır bildirim kutusu -->
+    <div class="dropdown-menu dropdown-menu-end pusulasu-notification-menu">
+
+        <!-- Başlık -->
+        <div class="notification-menu-header">
+            <div>
+                <strong>Bildirimler</strong>
+
+                <small>
+                    Tarife değişikliklerini takip edin.
+                </small>
+            </div>
+
+            @if (Model.OkunmamisSayisi > 0)
+            {
+                <span id="bildirimYeniSayisi"
+                      class="notification-new-count">
+                    @Model.OkunmamisSayisi yeni
+                </span>
+            }
+        </div>
+
+        <!-- Bildirim listesi -->
+        <div class="notification-list">
+
+            @if (Model.Bildirimler.Count == 0)
+            {
+                <div class="notification-empty">
+                    <span class="notification-empty-icon">✓</span>
+
+                    <div>
+                        <strong>Her şey güncel</strong>
+                        <small>Yeni bildiriminiz bulunmuyor.</small>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @foreach (var bildirim in Model.Bildirimler)
+                {
+                    <div class="notification-item">
+
+                        <span class="notification-item-dot"></span>
+
+                        <div class="notification-item-content">
+                            <strong class="notification-item-title">
+                                @bildirim.Baslik
+                            </strong>
+
+                            <p class="notification-item-message">
+                                @bildirim.Mesaj
+                            </p>
+
+                            <time class="notification-item-date">
+                                @bildirim.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")
+                            </time>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Bildirimleri okundu yapmak için gizli form -->
+<form id="bildirimOkumaForm"
+      asp-controller="Bildirim"
+      asp-action="TumunuOkunduYap"
+      method="post"
+      class="d-none">
+
+    @Html.AntiForgeryToken()
+</form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buton = document.getElementById("bildirimButonu");
+    const form = document.getElementById("bildirimOkumaForm");
+
+    if (!buton || !form) {
+        return;
+    }
+
+    buton.addEventListener("click", async function () {
+        const rozet = document.getElementById("bildirimSayisi");
+        const yeniSayisi = document.getElementById("bildirimYeniSayisi");
+
+        if (!rozet) {
+            return;
+        }
+
+        const cevap = await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form)
+        });
+
+        if (cevap.ok) {
+            rozet.remove();
+
+            if (yeniSayisi) {
+                yeniSayisi.remove();
+            }
+        }
+    });
+});
+</script>

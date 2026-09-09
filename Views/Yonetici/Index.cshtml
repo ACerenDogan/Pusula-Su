@@ -1,0 +1,71 @@
+@model PusulaSu.Models.YoneticiPaneliViewModel
+
+@{
+    ViewData["Title"] = "Yönetici Paneli";
+}
+
+<!-- Sayfa başlığı -->
+<div class="mb-4">
+    <span class="text-uppercase text-primary fw-semibold">
+        Yönetici Paneli
+    </span>
+
+    <h1 class="fw-bold mt-2">Sistem Özeti</h1>
+
+    <p class="text-muted">
+        Aboneleri, sayaç okumalarını ve güncel tarifeleri buradan takip edin.
+    </p>
+</div>
+
+<!-- Özet kartları -->
+<div class="row g-3 mb-4">
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <span class="text-muted">Toplam Abone</span>
+
+                <h2 class="fw-bold mt-2 mb-0">
+                    @Model.ToplamAboneSayisi
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <span class="text-muted">Kayıtlı Kullanıcı</span>
+
+                <h2 class="fw-bold mt-2 mb-0">
+                    @Model.KayitliKullaniciSayisi
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <span class="text-muted">Kapatılan Dönem</span>
+
+                <h2 class="fw-bold mt-2 mb-0">
+                    @Model.KapatilanDonemSayisi
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <span class="text-muted">Güncel Tarife Kademesi</span>
+
+                <h2 class="fw-bold mt-2 mb-0">
+                    @Model.GuncelTarifeKademeSayisi
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,147 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<!-- GİRİŞ SAYFASI -->
+<section class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- Sol tanıtım alanı -->
+        <div class="auth-brand-panel">
+
+            <div class="auth-brand-mark">PS</div>
+
+            <span class="auth-kicker">
+                AKILLI SU TÜKETİM TAKİBİ
+            </span>
+
+            <h1>PusulaSu’ya Hoş Geldiniz</h1>
+
+            <p>
+                Sayaç okumalarınızı kaydedin, tüketiminizi takip edin
+                ve güncel tarifeye göre tahmini bedelinizi görüntüleyin.
+            </p>
+
+            <div class="auth-features">
+
+                <div>
+                    <span>✓</span>
+                    Manuel sayaç kaydı
+                </div>
+
+                <div>
+                    <span>✓</span>
+                    Tüketim ve tarife takibi
+                </div>
+
+                <div>
+                    <span>✓</span>
+                    Tahmini su bedeli
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sağ giriş formu -->
+        <div class="auth-form-panel">
+
+            <div class="auth-form-header">
+                <span class="auth-form-kicker">ABONE GİRİŞİ</span>
+
+                <h2>Hesabınıza giriş yapın</h2>
+
+                <p>
+                    Abone numaranız ve şifrenizle devam edin.
+                </p>
+            </div>
+
+            <form id="account" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger"
+                     role="alert">
+                </div>
+
+                <!-- Abone numarası -->
+                <div class="mb-3">
+                    <label asp-for="Input.AboneNo"
+                           class="form-label auth-label">
+                        Abone Numarası
+                    </label>
+
+                    <input asp-for="Input.AboneNo"
+                           class="form-control auth-input"
+                           autocomplete="username"
+                           inputmode="numeric"
+                           aria-required="true"
+                           placeholder="Örneğin: 123456" />
+
+                    <span asp-validation-for="Input.AboneNo"
+                          class="text-danger small"></span>
+                </div>
+
+                <!-- Şifre -->
+                <div class="mb-3">
+                    <label asp-for="Input.Password"
+                           class="form-label auth-label">
+                        Şifre
+                    </label>
+
+                    <input asp-for="Input.Password"
+                           class="form-control auth-input"
+                           autocomplete="current-password"
+                           aria-required="true"
+                           placeholder="Şifrenizi giriniz" />
+
+                    <span asp-validation-for="Input.Password"
+                          class="text-danger small"></span>
+                </div>
+
+                <!-- Beni hatırla -->
+                <div class="form-check mb-4">
+                    <input asp-for="Input.RememberMe"
+                           class="form-check-input" />
+
+                    <label asp-for="Input.RememberMe"
+                           class="form-check-label">
+                        Beni hatırla
+                    </label>
+                </div>
+<div class="text-end mb-3">
+    <a asp-area=""
+   asp-controller="SifreYenile"
+   asp-action="Index"
+   class="text-decoration-none fw-semibold">
+    Şifremi Unuttum
+</a>
+</div>
+                <button id="login-submit"
+                        type="submit"
+                        class="btn auth-submit-button w-100">
+                    Giriş Yap
+                    <span>→</span>
+                </button>
+
+                <div class="auth-form-footer">
+                    <span>Henüz hesabınız yok mu?</span>
+
+                    <a asp-page="./Register"
+                       asp-route-returnUrl="@Model.ReturnUrl">
+                        Kayıt Ol
+                    </a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

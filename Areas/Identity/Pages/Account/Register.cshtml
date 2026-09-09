@@ -1,0 +1,182 @@
+﻿@page
+@model PusulaSu.Areas.Identity.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<!-- KAYIT SAYFASI -->
+<section class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- Sol tanıtım alanı -->
+        <div class="auth-brand-panel">
+
+            <div class="auth-brand-mark">PS</div>
+
+            <span class="auth-kicker">
+                PUSULASU ABONELİĞİ
+            </span>
+
+            <h1>Tüketiminizi bilinçli yönetin</h1>
+
+            <p>
+                Mevcut abonelik bilgilerinizi doğrulayarak hesabınızı
+                oluşturun ve PusulaSu özelliklerine erişin.
+            </p>
+
+            <div class="auth-features">
+
+                <div>
+                    <span>✓</span>
+                    Sayaç okumalarını kaydetme
+                </div>
+
+                <div>
+                    <span>✓</span>
+                    Aylık tüketimi görüntüleme
+                </div>
+
+                <div>
+                    <span>✓</span>
+                    Tarife bildirimlerini takip etme
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sağ kayıt formu -->
+        <div class="auth-form-panel">
+
+            <div class="auth-form-header">
+                <span class="auth-form-kicker">YENİ HESAP</span>
+
+                <h2>Hesabınızı oluşturun</h2>
+
+                <p>
+                    Abone ve sayaç bilgilerinizi kullanarak kayıt olun.
+                </p>
+            </div>
+
+            <form id="registerForm"
+                  asp-route-returnUrl="@Model.ReturnUrl"
+                  method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger"
+                     role="alert">
+                </div>
+
+                <!-- Abone ve sayaç bilgileri -->
+                <div class="row g-3 mb-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.AboneNo"
+                               class="form-label auth-label">
+                            Abone Numarası
+                        </label>
+
+                        <input asp-for="Input.AboneNo"
+                               class="form-control auth-input"
+                               autocomplete="username"
+                               inputmode="numeric"
+                               aria-required="true"
+                               placeholder="Örneğin: 123456" />
+
+                        <span asp-validation-for="Input.AboneNo"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.SayacNo"
+                               class="form-label auth-label">
+                            Sayaç Numarası
+                        </label>
+
+                        <input asp-for="Input.SayacNo"
+                               class="form-control auth-input"
+                               autocomplete="off"
+                               inputmode="numeric"
+                               aria-required="true"
+                               placeholder="Örneğin: 789012" />
+
+                        <span asp-validation-for="Input.SayacNo"
+                              class="text-danger small"></span>
+                    </div>
+
+                </div>
+
+                <!-- Şifre bilgileri -->
+                <div class="row g-3 mb-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.Password"
+                               class="form-label auth-label">
+                            Şifre
+                        </label>
+
+                        <input asp-for="Input.Password"
+                               class="form-control auth-input"
+                               autocomplete="new-password"
+                               aria-required="true"
+                               placeholder="Şifrenizi oluşturun" />
+
+                        <span asp-validation-for="Input.Password"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.ConfirmPassword"
+                               class="form-label auth-label">
+                            Şifre Tekrarı
+                        </label>
+
+                        <input asp-for="Input.ConfirmPassword"
+                               class="form-control auth-input"
+                               autocomplete="off"
+                               aria-required="true"
+                               placeholder="Şifrenizi tekrar girin" />
+
+                        <span asp-validation-for="Input.ConfirmPassword"
+                              class="text-danger small"></span>
+                    </div>
+
+                </div>
+
+               <!-- Bilgilendirme kutusu -->
+<div class="auth-note mb-4">
+    <span class="auth-note-icon">i</span>
+
+    <p class="mb-0">
+        Abone ve sayaç numaranız, sistemde kayıtlı abonelik
+        bilgileriyle eşleşmelidir.
+    </p>
+</div>
+
+                <button id="registerSubmit"
+                        type="submit"
+                        class="btn auth-submit-button w-100">
+                    Hesabımı Oluştur
+                    <span>→</span>
+                </button>
+
+                <div class="auth-form-footer">
+                    <span>Zaten hesabınız var mı?</span>
+
+                    <a asp-page="./Login"
+                       asp-route-returnUrl="@Model.ReturnUrl">
+                        Giriş Yap
+                    </a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

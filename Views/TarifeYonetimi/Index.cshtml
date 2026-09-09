@@ -1,0 +1,120 @@
+@model List<PusulaSu.Models.Tarife>
+@{
+    ViewData["Title"] = "Tarife Yönetimi";
+}
+
+<!-- Üst Başlık ve Ekle Butonu -->
+<div class="dashboard-header mb-4">
+    <div class="dashboard-header-content d-flex justify-content-between align-items-center w-100 flex-wrap gap-3">
+        <div>
+            <span class="manual-entry-badge">Yönetici Paneli</span>
+            <h1 class="mt-2">Tarife Yönetimi</h1>
+            <p class="text-muted mb-0">Su ve atıksu tarifelerini, dönem ve abone türüne göre yönetin.</p>
+        </div>
+        <div>
+            <a asp-action="Ekle" class="dashboard-save-button text-decoration-none d-inline-flex align-items-center justify-content-center" style="height: 48px; padding: 0 1.5rem;">
+                + Yeni Tarife Ekle
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Filtreleme (Arama) Alanı -->
+<div class="reading-history-card mb-4">
+    <div class="card-body p-4">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-5">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white border-end-0">🔍</span>
+                    <input type="text" id="tarifeArama" class="form-control border-start-0 py-2" placeholder="Dönem (08/2026), Mesken, Fiyat vb. ara...">
+                </div>
+            </div>
+            <div class="col-md-7 text-md-end">
+                <span class="text-muted small">Toplam <strong class="text-dark">@Model.Count</strong> tarife kuralı listeleniyor.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tarifeler Listesi Tablosu -->
+<div class="reading-history-card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 reading-history-table" id="tarifeTablosu">
+                <thead>
+                    <tr>
+                        <th>Dönem</th>
+                        <th>Abone Türü</th>
+                        <th>Kademe (Alt - Üst)</th>
+                        <th>Su (m³)</th>
+                        <th>Atıksu (m³)</th>
+                        <th class="text-end">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tarife in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="badge bg-light text-dark border fs-6 shadow-sm">
+                                    @tarife.Ay.ToString("D2")/@tarife.Yil
+                                </span>
+                            </td>
+                            <td>
+                                <strong class="text-secondary">@tarife.AboneTuru</strong>
+                            </td>
+                            <td>
+                                <span class="reading-consumption-badge">
+                                    @tarife.AltSinir.ToString("0.##") - @(tarife.UstSinir.HasValue ? tarife.UstSinir.Value.ToString("0.##") : "Sınırsız") m³
+                                </span>
+                            </td>
+                            <td>
+                                <strong class="text-success">@tarife.SuBirimFiyati.ToString("N2") ₺</strong>
+                            </td>
+                            <td>
+                                <strong class="text-primary">@tarife.AtikSuBirimFiyati.ToString("N2") ₺</strong>
+                            </td>
+                            <td class="text-end">
+                                <a asp-action="Duzenle" asp-route-id="@tarife.Id" class="btn btn-sm btn-outline-dark me-2 rounded-pill px-3">
+                                    Düzenle
+                                </a>
+                                <form asp-action="Sil" asp-route-id="@tarife.Id" method="post" class="d-inline" onsubmit="return confirm('Bu tarifeyi silmek istediğinize emin misiniz?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Sil</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Arama Sonucu Bulunamadıysa Çıkacak Uyarı -->
+        <div id="aramaBulunamadi" class="text-center py-5 d-none">
+            <p class="text-muted mb-0">Aradığınız kriterlere uygun tarife bulunamadı.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Arama İşlemi İçin Anında Çalışan JavaScript -->
+<script>
+    document.getElementById('tarifeArama').addEventListener('keyup', function () {
+        var arananKelime = this.value.toLowerCase();
+        var satirlar = document.querySelectorAll('#tarifeTablosu tbody tr');
+        var gosterilenSayisi = 0;
+
+        satirlar.forEach(function (satir) {
+            var metin = satir.textContent.toLowerCase();
+            if (metin.includes(arananKelime)) {
+                satir.style.display = '';
+                gosterilenSayisi++;
+            } else {
+                satir.style.display = 'none';
+            }
+        });
+
+        // Tabloyu ve uyarı mesajını gizle/göster
+        document.getElementById('aramaBulunamadi').classList.toggle('d-none', gosterilenSayisi > 0);
+        document.getElementById('tarifeTablosu').style.display = gosterilenSayisi > 0 ? '' : 'none';
+    });
+</script>

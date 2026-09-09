@@ -1,0 +1,453 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<section class="pusulasu-hero rounded-4 p-4 p-lg-5 mb-5 position-relative overflow-hidden">
+
+    <div class="hero-grid"></div>
+    <div class="hero-glow hero-glow-one"></div>
+    <div class="hero-glow hero-glow-two"></div>
+
+    <div class="row align-items-center g-5 position-relative hero-content">
+
+        <div class="col-lg-7">
+
+            <div class="hero-label mb-4">
+                <span class="hero-label-dot"></span>
+                AKILLI SU TÜKETİM TAKİBİ
+            </div>
+
+            <h1 class="hero-title mb-4">
+                Su tüketiminizi
+                <span>veriye dönüştürün.</span>
+            </h1>
+
+            <p class="hero-description mb-4">
+                Sayaç okumalarınızı kaydedin, tüketim değişimlerinizi
+                takip edin ve güncel tarifeye göre tahmini bedelinizi
+                tek panel üzerinden görüntüleyin.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3">
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="TarifeYonetimi"
+                           asp-action="Index"
+                           class="btn hero-primary-btn btn-lg px-4">
+                            Tarife Yönetimine Git
+                            <span class="ms-2">→</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Dashboard"
+                           asp-action="Index"
+                           class="btn hero-primary-btn btn-lg px-4">
+                            Tüketim Paneline Git
+                            <span class="ms-2">→</span>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a asp-area="Identity"
+                       asp-page="/Account/Register"
+                       class="btn hero-primary-btn btn-lg px-4">
+                        Hemen Başla
+                        <span class="ms-2">→</span>
+                    </a>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Login"
+                       class="btn hero-secondary-btn btn-lg px-4">
+                        Giriş Yap
+                    </a>
+                }
+
+            </div>
+
+            <div class="hero-meta d-flex flex-wrap gap-4 mt-5">
+
+                <div>
+                    <strong>Kolay</strong>
+                    <span>Kayıt</span>
+                </div>
+
+                <div>
+                    <strong>Anlık</strong>
+                    <span>Takip</span>
+                </div>
+
+                <div>
+                    <strong>Güncel</strong>
+                    <span>Tarife</span>
+                </div>
+
+            </div>
+
+        </div>
+
+       <!-- HERO SAĞ TARAF: Animasyonlu MESKİ tarih sayacı -->
+<div class="col-lg-5">
+
+    <div class="hero-history-panel">
+
+        <!-- Bölümün küçük üst başlığı -->
+        <span class="history-kicker">
+            MERSİN’İN SU YOLCULUĞU
+        </span>
+
+        <h2 class="history-title">
+            1995’ten bugüne suyun izinde
+        </h2>
+
+        <p class="history-description">
+            MESKİ
+        </p>
+
+        <!-- Animasyonlu tarih sayacı -->
+        <div id="meskiTarihSayaci"
+             class="history-counter"
+             aria-label="MESKİ kuruluş tarihi 4 Mayıs 1995">
+
+            <!-- Gün: 04 -->
+            <div class="counter-group">
+                <span class="counter-digit" data-target="0">0</span>
+                <span class="counter-digit" data-target="4">0</span>
+            </div>
+
+            <span class="counter-separator">.</span>
+
+            <!-- Ay: 05 -->
+            <div class="counter-group">
+                <span class="counter-digit" data-target="0">0</span>
+                <span class="counter-digit" data-target="5">0</span>
+            </div>
+
+            <span class="counter-separator">.</span>
+
+            <!-- Yıl: 1995 -->
+            <div class="counter-group">
+                <span class="counter-digit" data-target="1">0</span>
+                <span class="counter-digit" data-target="9">0</span>
+                <span class="counter-digit" data-target="9">0</span>
+                <span class="counter-digit" data-target="5">0</span>
+            </div>
+
+        </div>
+        <!-- Alt bilgiler -->
+        <div class="history-tags">
+            <span>Su Yönetimi</span>
+            <span>Sürdürülebilir Gelecek</span>
+        </div>
+
+    </div>
+
+</div>
+
+    </div>
+</section>
+<!-- =====================================================
+     SU SAYACI TANITIM BÖLÜMÜ
+     Sayaç endeksinin sisteme nasıl girildiğini anlatır.
+     ===================================================== -->
+<section class="meter-guide-section mb-5">
+
+    <div class="row align-items-center g-5">
+
+        <!-- SOL TARAF: Temsili su sayacı -->
+        <div class="col-lg-5">
+
+            <div class="water-meter-card">
+
+                <div class="meter-card-header">
+                    <span class="meter-card-label">
+                        ÖRNEK SAYAÇ GÖRÜNÜMÜ
+                    </span>
+
+                    <span class="meter-card-status">
+                        <span></span>
+                        Aktif
+                    </span>
+                </div>
+
+                <!-- Yuvarlak sayaç alanı -->
+<div class="meter-face">
+
+    <!-- Sadece bu dış halka dönecek -->
+    <div class="meter-rotating-ring" aria-hidden="true"></div>
+
+    <!-- Ortadaki yazılar sabit kalacak -->
+    <div class="meter-face-inner">
+        <span class="meter-drop">◉</span>
+        <strong>SU SAYACI</strong>
+        <small>m³</small>
+    </div>
+
+</div>
+                <!-- Sayaç üzerindeki örnek endeks -->
+   <div class="meter-number meter-flip-number">
+    <span>-</span>
+    <span>-</span>
+    <span>-</span>
+    <span>-</span>
+    <span>-</span>
+    <span>-</span>
+    <small>m³</small>
+</div>
+                <p class="meter-example-note">
+                    Bu alan temsili sayaç görünümüdür.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- SAĞ TARAF: Kullanım açıklaması -->
+        <div class="col-lg-7">
+
+            <span class="guide-kicker">
+                SU SAYACI NASIL KULLANILIR?
+            </span>
+
+            <h2 class="guide-title">
+                Endeksi siz girin, tüketim farkını PusulaSu hesaplasın.
+            </h2>
+
+            <p class="guide-description">
+                Su sayacınızda gördüğünüz güncel endeksi tarih bilgisiyle
+                kaydedin. PusulaSu, iki okuma arasındaki farkı hesaplayarak
+                tüketiminizi ve güncel tarifeye göre tahmini bedelinizi gösterir.
+            </p>
+
+            <!-- Özellik etiketleri -->
+            <div class="guide-tags">
+                <span>Manuel Kayıt</span>
+                <span>Akıllı Tahmin</span>
+                <span>Geçmiş Okumalar</span>
+            </div>
+
+            <!-- İşlem adımları -->
+            <div class="guide-steps">
+
+                <div class="guide-step">
+                    <span class="guide-step-number">01</span>
+
+                    <div>
+                        <strong>Endeksi okuyun</strong>
+                        <p>Sayacınızda görünen güncel m³ değerini alın.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <span class="guide-step-number">02</span>
+
+                    <div>
+                        <strong>Sisteme kaydedin</strong>
+                        <p>Tarih ve sayaç endeksini tüketim paneline girin.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <span class="guide-step-number">03</span>
+
+                    <div>
+                        <strong>Sonucu görüntüleyin</strong>
+                        <p>Tüketim farkınızı ve tahmini bedelinizi inceleyin.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bilgilendirme notu -->
+            <div class="meter-info-note">
+                <span>i</span>
+
+                <p>
+                    <strong>Sayaç endeksi sıfırlanmaz.</strong>
+                    Tüketim, son endeks ile önceki endeks arasındaki
+                    fark üzerinden hesaplanır.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     PUSULASU'NUN SAĞLADIĞI FAYDALAR
+     Tekrara düşmeden projenin değerini anlatır.
+     ===================================================== -->
+<section class="home-benefits-section mb-5">
+
+    <div class="home-section-heading">
+        <span>PUSULASU İLE KONTROL SİZDE</span>
+
+        <h2>
+            Tüketim verisini anlamlı bilgiye dönüştürün.
+        </h2>
+
+        <p>
+            Sayaç okumalarınızı yalnızca kaydetmeyin;
+            değişimi görün, tarifeyi takip edin ve kullanımınızı planlayın.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Fayda 1 -->
+        <div class="col-md-4">
+            <article class="home-benefit-card h-100">
+
+                <div class="benefit-top">
+                    <span class="benefit-number">01</span>
+                    <span class="benefit-icon">m³</span>
+                </div>
+
+                <h3>Tüketimi görünür hâle getirin</h3>
+
+                <p>
+                    Farklı tarihlerde girdiğiniz sayaç endekslerini
+                    karşılaştırarak gerçek tüketim farkınızı görüntüleyin.
+                </p>
+
+            </article>
+        </div>
+
+        <!-- Fayda 2 -->
+        <div class="col-md-4">
+            <article class="home-benefit-card h-100">
+
+                <div class="benefit-top">
+                    <span class="benefit-number">02</span>
+                    <span class="benefit-icon">₺</span>
+                </div>
+
+                <h3>Tahmini bedeli inceleyin</h3>
+
+                <p>
+                    Aylık tüketiminizin güncel su ve atıksu tarifesine
+                    göre oluşturabileceği yaklaşık bedeli görün.
+                </p>
+
+            </article>
+        </div>
+
+        <!-- Fayda 3 -->
+        <div class="col-md-4">
+            <article class="home-benefit-card h-100">
+
+                <div class="benefit-top">
+                    <span class="benefit-number">03</span>
+                    <span class="benefit-icon">↗</span>
+                </div>
+
+                <h3>Değişikliklerden haberdar olun</h3>
+
+                <p>
+                    Yeni bir tarife yayınlandığında veya mevcut tarife
+                    güncellendiğinde sistem bildirimlerini takip edin.
+                </p>
+
+            </article>
+        </div>
+
+    </div>
+
+    <!-- Sistemin temel özelliklerini özetleyen şerit -->
+    <div class="home-capability-strip">
+
+        <div>
+            <span>✓</span>
+            Manuel sayaç kaydı
+        </div>
+
+        <div>
+            <span>✓</span>
+            Dönem bazlı hesaplama
+        </div>
+
+        <div>
+            <span>✓</span>
+            Güncel tarife takibi
+        </div>
+
+        <div>
+            <span>✓</span>
+            Kişisel tüketim paneli
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     SAYFANIN SON ÇAĞRI BÖLÜMÜ
+     Kullanıcının durumuna göre doğru sayfaya yönlendirir.
+     ===================================================== -->
+<section class="home-final-cta mb-4">
+
+    <div class="final-cta-decoration"></div>
+
+    <div class="row align-items-center g-4 position-relative">
+
+        <div class="col-lg-8">
+
+            <span class="final-cta-kicker">
+                PUSULASU’YU KULLANMAYA BAŞLAYIN
+            </span>
+
+            <h2>
+                Su tüketiminizi bugünden takip etmeye başlayın.
+            </h2>
+
+            <p>
+                Sayaç endekslerinizi kaydedin, geçmiş okumalarınıza ulaşın
+                ve güncel tarifeye göre tahmini bedelinizi görüntüleyin.
+            </p>
+
+        </div>
+
+        <div class="col-lg-4 text-lg-end">
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="TarifeYonetimi"
+                       asp-action="Index"
+                       class="btn final-cta-button">
+                        Tarifeleri Yönet
+                        <span>→</span>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn final-cta-button">
+                        Tüketim Panelini Aç
+                        <span>→</span>
+                    </a>
+                }
+            }
+            else
+            {
+                <a asp-area="Identity"
+                   asp-page="/Account/Register"
+                   class="btn final-cta-button">
+                    Ücretsiz Başlayın
+                    <span>→</span>
+                </a>
+            }
+
+        </div>
+
+    </div>
+
+</section>

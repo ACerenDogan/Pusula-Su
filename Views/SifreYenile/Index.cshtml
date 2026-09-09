@@ -1,0 +1,180 @@
+@model PusulaSu.Models.SifreYenileViewModel
+
+@{
+    ViewData["Title"] = "Şifre Yenile";
+}
+
+<div class="sifre-yenile-page">
+
+    <div class="sifre-yenile-card">
+
+        <!-- Sol bilgilendirme alanı -->
+        <div class="sifre-yenile-info">
+            <span class="sifre-yenile-kicker">
+                HESAP GÜVENLİĞİ
+            </span>
+
+            <h1>Şifrenizi güvenle yenileyin.</h1>
+
+            <p>
+                Abonelik bilgilerinizi doğrulayın ve hesabınız için
+                yeni bir şifre oluşturun.
+            </p>
+
+            <div class="sifre-bilgi-listesi">
+                <div>
+                    <span>1</span>
+                    <p>Abone ve sayaç bilgilerinizi girin.</p>
+                </div>
+
+                <div>
+                    <span>2</span>
+                    <p>Sistem kayıtlı aboneliğinizi doğrulasın.</p>
+                </div>
+
+                <div>
+                    <span>3</span>
+                    <p>Yeni şifrenizi oluşturun.</p>
+                </div>
+            </div>
+
+            <!-- Proje kapsamı açıklaması -->
+            <div class="sifre-demo-notu">
+                <strong>Prototip doğrulama</strong>
+
+                <p>
+                    Bu staj sürümünde abonelik bilgileri kullanılır.
+                    Gerçek kullanımda kayıtlı telefona gönderilen
+                    tek kullanımlık SMS koduyla doğrulama yapılacaktır.
+                </p>
+            </div>
+        </div>
+
+        <!-- Sağ form alanı -->
+        <div class="sifre-yenile-form">
+
+            @if (TempData["Basari"] != null)
+            {
+                <!-- Başarılı işlem ekranı -->
+                <div class="sifre-basari">
+                    <div class="sifre-basari-icon">✓</div>
+
+                    <h2>Şifreniz yenilendi</h2>
+
+                    <p>
+                        @TempData["Basari"]
+                    </p>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Login"
+                       class="btn btn-primary btn-lg w-100">
+                        Giriş Sayfasına Git
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="mb-4">
+                    <span class="sifre-form-kicker">
+                        ŞİFRE YENİLEME
+                    </span>
+
+                    <h2 class="fw-bold">Yeni şifre oluşturun</h2>
+
+                    <p class="text-muted">
+                        Bilgilerinizi eksiksiz ve doğru şekilde girin.
+                    </p>
+                </div>
+
+                <form asp-controller="SifreYenile"
+                      asp-action="Index"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="AboneNo"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="AboneNo"
+                               class="form-control sifre-input"
+                               autocomplete="username"
+                               placeholder="Örneğin: 123456" />
+
+                        <span asp-validation-for="AboneNo"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SayacNo"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="SayacNo"
+                               class="form-control sifre-input"
+                               placeholder="Örneğin: 789012" />
+
+                        <span asp-validation-for="SayacNo"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="YeniSifre"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="YeniSifre"
+                               class="form-control sifre-input"
+                               autocomplete="new-password"
+                               placeholder="Yeni şifrenizi girin" />
+
+                        <span asp-validation-for="YeniSifre"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="YeniSifreTekrari"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="YeniSifreTekrari"
+                               class="form-control sifre-input"
+                               autocomplete="new-password"
+                               placeholder="Yeni şifrenizi tekrar girin" />
+
+                        <span asp-validation-for="YeniSifreTekrari"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="sifre-kural-notu">
+                        Şifreniz büyük harf, küçük harf, rakam ve özel
+                        karakter içermelidir.
+                    </div>
+
+                    <button type="submit"
+                            class="btn auth-submit-button w-100">
+                        Şifremi Yenile
+                    </button>
+
+                    <div class="text-center mt-4">
+                        <a asp-area="Identity"
+                           asp-page="/Account/Login"
+                           class="text-decoration-none fw-semibold">
+                            ← Giriş sayfasına dön
+                        </a>
+                    </div>
+                </form>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
