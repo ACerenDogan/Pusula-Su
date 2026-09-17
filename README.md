@@ -75,7 +75,7 @@ PusulaSu/
 
 ```bash
 git clone https://github.com/ACerenDogan/Pusula-Su.git
-cd PusulaSuSON/PusulaSu
+cd Pusula-Su
 dotnet restore
 dotnet run
 ```
